@@ -1,6 +1,6 @@
 const webpack = require('webpack');
 const path = require('path');
-//const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
 
@@ -50,7 +50,7 @@ const config = {
         ]
     },
     plugins: [
-        //new CleanWebpackPlugin(),
+        new CleanWebpackPlugin(),
         new HtmlWebpackPlugin({
             cache: false,
             template: './src/index.html',

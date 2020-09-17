@@ -11,47 +11,24 @@ export const buzzers = {
     state: initialState,
     actions: {
         setAmount({dispatch, commit}, amount) {
-            commit('amount', amount)
+            commit('amount', amount);
         },
-        /* settings({ dispatch, commit }, { buzzers }) {
-            commit('loginRequest', { username });
-
-            userService.login(username, password)
-                .then(
-                    user => {
-                        commit('loginSuccess', user);
-                        router.push('/');
-                    },
-                    error => {
-                        commit('loginFailure', error);
-                        //dispatch('alert/error', error, { root: true });
-                    }
-                );
+        setConfigButtonInvisibility({dispatch, commit}, config_button_invisibility) {
+            commit('config_button_invisibility', config_button_invisibility);
         },
-        logout({ commit }) {
-            userService.logout();
-            commit('logout');
-        } */
+        setShowBuzzersPermanently({dispatch, commit}, show_buzzers_permanently) {
+            commit('show_buzzers_permanently', show_buzzers_permanently);
+        },
     },
     mutations: {
         amount(state, amount) {
             state.amount = amount;
         },
-        /* loginRequest(state, user) {
-            state.status = { loggingIn: true };
-            state.user = user;
+        config_button_invisibility(state, config_button_invisibility) {
+            state.config_button_invisibility = config_button_invisibility;
         },
-        loginSuccess(state, user) {
-            state.status = { loggedIn: true };
-            state.user = user;
+        show_buzzers_permanently(state, show_buzzers_permanently) {
+            state.show_buzzers_permanently = show_buzzers_permanently;
         },
-        loginFailure(state) {
-            state.status = {};
-            state.user = null;
-        },
-        logout(state) {
-            state.status = {};
-            state.user = null;
-        } */
     }
 }

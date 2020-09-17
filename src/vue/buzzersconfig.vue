@@ -2,7 +2,7 @@
     <div class="lightbox container">
 
         
-        <p>Lodash is available: {{!!_}}</p>
+        <!-- <p>Lodash is available: {{!!_}}</p> -->
 
         <div class="close">
             &times;
@@ -12,7 +12,7 @@
 
 
         <form>
--{{ amount }}-
+
             <!-- Anzahl Buzzers -->
             <div class="form-group">
                 <input type="number" min="1" v-model="amount">
@@ -33,7 +33,7 @@
 
             <div class="checkbox">
                 <label>
-                    <input type="checkbox"><i class="helper"></i>Make configuration button invisible.
+                    <input type="checkbox" v-model="config_button_invisibility" value="1"><i class="helper"></i>Make configuration button invisible.
                 </label>
             </div>
 
@@ -57,14 +57,11 @@ export default {
     },
     data: function() {
         return {
-            //amount: this.$store.state.buzzers.amount,
+            
         }
     },
     mounted () {
         console.log('mounted');
-        
-        //console.log( this.$store.getters['buzzers/amount'] );
-        console.log( this.$store.state.buzzers.amount );
     },
     computed: {
         amount: {
@@ -73,16 +70,34 @@ export default {
             },
             set: function(newValue) {
                 this.setAmount(newValue);
-                //this.$store.commit("buzzers/amount", newValue);
             }
         },
+        show_buzzers_permanently: {
+            get: function() {
+                return this.$store.state.buzzers.show_buzzers_permanently;
+            },
+            set: function(newValue) {
+                this.setShowBuzzersPermanently(newValue);
+            }
+        },
+        config_button_invisibility: {
+            get: function() {
+                return this.$store.state.buzzers.config_button_invisibility;
+            },
+            set: function(newValue) {
+                this.setConfigButtonInvisibility(newValue);
+            }
+        },
+
         buzzers: function() {
             return _.range(0, this.amount);
         }
     },
     methods: {
         ...mapActions({
-            setAmount: 'buzzers/setAmount'
+            setAmount: 'buzzers/setAmount',
+            setConfigButtonInvisibility: 'buzzers/setConfigButtonInvisibility',
+            setShowBuzzersPermanently: 'buzzers/setShowBuzzersPermanently',
         }),
     
     },
