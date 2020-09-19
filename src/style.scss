@@ -1,13 +1,8 @@
 
-//@import "scss/obs.scss";
+@import "scss/obs.scss";
 @import "scss/general.scss";
 @import "scss/form.scss";
 @import "scss/buzzers.scss";
+@import "scss/config.scss";
 
 
-
-.lightbox {
-  .close {
-    cursor: pointer;
-  }
-}

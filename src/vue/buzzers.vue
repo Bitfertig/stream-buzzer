@@ -1,15 +1,15 @@
 <template>
-    <div>
+    <div class="buzzers_window" @click="resetActiveRound()">
 
         <!-- <input type="number" min="1" v-model="amount"> -->
 
         <div class="buzzers">
-            <div class="buzzer" v-for="(buzzer, index) in buzzers" :key="index">{{index}}
-                <div class="select-button"></div>
+            <div class="buzzer" v-for="(buzzer, index) in buzzers" :key="index">
+                <div :class="{'select-button':1, 'active':buzzer.active}">
+                    {{ buzzer.label }}
+                </div>
             </div>
         </div>
-
-        <div :style="{'visibility':config_button_invisibility?'hidden':'visible'}">Config {{ !!config_button_invisibility }}</div>
 
     </div>
 </template>
@@ -17,23 +17,33 @@
 <script>
 import { mapGetters, mapActions } from 'vuex';
 export default {
+    props: ['activeBuzzers'],
     components: {
         
     },
     data: function() {
         return {
-            //amount: 1,
+            activeRound: true,
         }
     },
     mounted () {
-        console.log('mounted');
+        console.log('buzzers.vue mounted.');
         
-        document.addEventListener('hashchange', function(){
-            
-        });
+        /* document.addEventListener('hashchange', function(){ }); */
+        var that = this;
 
-        document.addEventListener('keypress', function(){
-            alert(1);
+        document.addEventListener('keypress', function(e) {
+            if ( that.activeBuzzers && that.activeRound ) {
+                for (let i in that.buzzers) {
+                    let buzzer = that.buzzers[i];
+                    if ( e.key == buzzer.key ) {
+                        console.log('"'+e.key+'" bzzzt!');
+                        //alert( buzzer.label+' "'+e.key+'" bzzzt!' );
+                        that.activeRound = false;
+                        that.buzzers[i].active = true;
+                    }
+                }
+            }
         });
 
     },
@@ -47,14 +57,6 @@ export default {
                 //this.$store.commit("buzzers/amount", newValue);
             }
         },
-        show_buzzers_permanently: {
-            get: function() {
-                return this.$store.state.buzzers.show_buzzers_permanently;
-            },
-            set: function(newValue) {
-                this.setShowBuzzersPermanently(newValue);
-            }
-        },
         config_button_invisibility: {
             get: function() {
                 return this.$store.state.buzzers.config_button_invisibility;
@@ -63,16 +65,27 @@ export default {
                 this.setConfigButtonInvisibility(newValue);
             }
         },
-
-        buzzers: function() {
-            return _.range(0, this.amount);
-        }
+        buzzers: {
+            get: function() {
+                return this.$store.state.buzzers.buzzers;
+            },
+            set: function(newValue) {
+                this.setBuzzers(newValue);
+            }
+        },
     },
     methods: {
         ...mapActions({
-            setAmount: 'buzzers/setAmount'
+            setAmount: 'buzzers/setAmount',
+            setConfigButtonInvisibility: 'buzzers/setConfigButtonInvisibility',
+            setBuzzers: 'buzzers/setBuzzers',
         }),
-    
+        resetActiveRound: function() {
+            for (let i in this.buzzers) {
+                this.buzzers[i].active = false;
+            }
+            this.activeRound = true;
+        }
     },
 }
 </script>

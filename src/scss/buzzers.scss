@@ -1,4 +1,15 @@
 
+.buzzers_window {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
 .buzzers {
     display: flex;
     flex-direction: row;
@@ -20,7 +31,8 @@
         box-shadow: 0 15px #e24f4f;
     }
 
-    .select-button:active {
+    /* .select-button:active, */
+    .select-button.active {
         box-shadow: 0 0 #e24f4f;
         -webkit-transform: translate(0px, 15px);
         -moz-transform: translate(0px, 15px);

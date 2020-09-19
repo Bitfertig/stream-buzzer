@@ -1,51 +1,56 @@
 <template>
-    <div class="lightbox container">
+    <div class="config">
 
-        
-        <!-- <p>Lodash is available: {{!!_}}</p> -->
+        <div class="back" @click="close()"></div>
 
-        <div class="close">
-            &times;
-        </div>
-
-        <h1>Configuration</h1>
-
-
-        <form>
-
-            <!-- Anzahl Buzzers -->
-            <div class="form-group">
-                <input type="number" min="1" v-model="amount">
-                <label for="input" class="control-label">Amount of buzzers</label><i class="bar"></i>
-            </div>
+        <div class="container">
             
+            <!-- <p>Lodash is available: {{!!_}}</p> -->
 
-            <div class="horizontalslider-box hs-box">
-                <template v-for="(buzzer, index) in buzzers">
-                    <div :key="index" class="hs-item">
-                        name,
-                        layout,
-                        sound
-                    </div>
-                </template>
+            <div class="close" @click="close()" title="Close">
+                &times;
             </div>
 
-
-            <div class="checkbox">
-                <label>
-                    <input type="checkbox" v-model="config_button_invisibility" value="1"><i class="helper"></i>Make configuration button invisible.
-                </label>
-            </div>
+            <h1>Configuration</h1>
 
 
-            <div class="checkbox">
-                <label>
-                    <input type="checkbox" checked="checked"><i class="helper"></i>Show buzzers permanently.
-                </label>
-            </div>
+            <form>
 
-        </form>
+                <!-- Anzahl Buzzers -->
+                <div class="form-group">
+                    <input type="number" min="1" v-model="amount">
+                    <label for="input" class="control-label">Amount of buzzers</label><i class="bar"></i>
+                </div>
+                
+                <div class="horizontalslider-box hs-box">
+                    <template v-for="(buzzer, index) in buzzers">
+                        <div :key="index" class="hs-item">
+                            <div class="title">Buzzer {{index + 1}}</div>
+
+                            <div class="form-group">
+                                <input type="text" v-model="buzzer.label" placeholder="Label">
+                                <label for="input" class="control-label">Label</label><i class="bar"></i>
+                            </div>
+                            
+                            <div class="form-group">
+                                <input type="text" v-model="buzzer.key" placeholder="Key" maxlength="1" @focus="$event.target.select()" @input="$event.target.select()">
+                                <label for="input" class="control-label">Key</label><i class="bar"></i>
+                            </div>
+
+                        </div>
+                    </template>
+                </div>
+
+
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" v-model="config_button_invisibility" value="1"><i class="helper"></i>Make configuration button invisible.
+                    </label>
+                </div>
+
+            </form>
         
+        </div>
     </div>
 </template>
 
@@ -61,23 +66,15 @@ export default {
         }
     },
     mounted () {
-        console.log('mounted');
+        console.log('buzzersconfig.vue mounted.');
     },
     computed: {
         amount: {
             get: function() {
                 return this.$store.state.buzzers.amount;
             },
-            set: function(newValue) {
+            set: function(newValue) {console.log(123);
                 this.setAmount(newValue);
-            }
-        },
-        show_buzzers_permanently: {
-            get: function() {
-                return this.$store.state.buzzers.show_buzzers_permanently;
-            },
-            set: function(newValue) {
-                this.setShowBuzzersPermanently(newValue);
             }
         },
         config_button_invisibility: {
@@ -88,18 +85,24 @@ export default {
                 this.setConfigButtonInvisibility(newValue);
             }
         },
-
-        buzzers: function() {
-            return _.range(0, this.amount);
-        }
+        buzzers: {
+            get: function() {
+                return this.$store.state.buzzers.buzzers;
+            },
+            set: function(newValue) {
+                this.setBuzzers(newValue);
+            }
+        },
     },
     methods: {
         ...mapActions({
             setAmount: 'buzzers/setAmount',
             setConfigButtonInvisibility: 'buzzers/setConfigButtonInvisibility',
-            setShowBuzzersPermanently: 'buzzers/setShowBuzzersPermanently',
+            setBuzzers: 'buzzers/setBuzzers',
         }),
-    
+        close: function() {
+            this.$emit('showConfig', false);
+        }
     },
 }
 </script>
