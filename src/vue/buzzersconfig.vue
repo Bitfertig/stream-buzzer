@@ -15,7 +15,7 @@
 
 
             <form>
-{{buzzers}}
+
                 <!-- Anzahl Buzzers -->
                 <div class="form-group">
                     <input type="number" min="1" v-model="amount">
