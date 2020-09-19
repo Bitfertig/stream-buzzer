@@ -20,8 +20,8 @@ export const buzzers = {
             commit('amount', amount);
             var buzzers = [];
             for (let i = 0; i < amount; i++) {
-                if ( i in getters.getBuzzers ) { buzzers[i] = getters.getBuzzers[i]; }
-                else buzzers[i] = default_buzzer;
+                if ( i in getters.getBuzzers ) { buzzers[i] = { ...getters.getBuzzers[i] }; }
+                else buzzers[i] = { ...default_buzzer };
             }
             commit('buzzers', buzzers);
         },

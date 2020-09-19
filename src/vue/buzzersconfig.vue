@@ -15,7 +15,7 @@
 
 
             <form>
-
+{{buzzers}}
                 <!-- Anzahl Buzzers -->
                 <div class="form-group">
                     <input type="number" min="1" v-model="amount">
@@ -28,12 +28,12 @@
                             <div class="title">Buzzer {{index + 1}}</div>
 
                             <div class="form-group">
-                                <input type="text" v-model="buzzer.label" placeholder="Label">
+                                <input type="text" v-model="buzzers[index].label" placeholder="Label">
                                 <label for="input" class="control-label">Label</label><i class="bar"></i>
                             </div>
                             
                             <div class="form-group">
-                                <input type="text" v-model="buzzer.key" placeholder="Key" maxlength="1" @focus="$event.target.select()" @input="$event.target.select()">
+                                <input type="text" v-model="buzzers[index].key" placeholder="Key" maxlength="1" @focus="$event.target.select()" @input="$event.target.select()">
                                 <label for="input" class="control-label">Key</label><i class="bar"></i>
                             </div>
 
